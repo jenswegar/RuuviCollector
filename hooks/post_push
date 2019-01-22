@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+# Parse image name for repo name
+IFS=':' read -r repoName string <<< "jenswegar/ruuvi-collector:latest"
+
+# Get a suitably long part of the git commit hash
+tag="$( cut -c 1-7 <<< "$SOURCE_COMMIT" )"
+
+docker tag $IMAGE_NAME ${repoName}:${tag}
+docker push ${repoName}:${tag}
